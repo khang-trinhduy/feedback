@@ -1,0 +1,76 @@
+﻿@model FeedbackUs.Models.Rating
+
+@{
+    ViewData["Title"] = "Tạo đánh giá";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Tạo đánh giá</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @*<form asp-action="Create">*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Đánh giá</label>
+                <input asp-for="Name" class="form-control" placeholder="Sản phẩm, dịch vụ, ..." />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="submit" type="submit" value="Tạo" class="btn btn-primary" />
+            </div>
+        @*</form>*@
+    </div>
+</div>
+
+<div>
+    <a asp-action="Contents">Thêm nội dung</a> | <a asp-action="index">Danh sách đánh giá</a>
+</div>
+
+<script>
+    function get_date() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var today = dd + '/' + mm + '/' + yyyy;
+        return today;
+    }
+
+    $('#submit').on('click', function (e) {
+        var name = $('#Name').val();
+        if (name != null) {
+            var date = get_date();
+            var url = '@Url.Action("create", "ratings")';
+            var rate = { 'Name': name, 'Date': date };
+            var data = JSON.stringify(rate);
+            $.ajax({
+                type: 'post',
+                url: url,
+                headers: {
+                    'content-type': 'application/json'
+                },
+                datatype: 'json',
+                data: data,
+                success: function (data) {
+                    console.log('create successful');
+                    alert('Đã thêm vào hệ thống');
+                    $('#Name').val('');
+                },
+                error: function () {
+                    console.log('create failed');
+                    console.log(data);
+                    alert('Xảy ra lỗi')
+                }
+            });
+        }
+    });
+</script>

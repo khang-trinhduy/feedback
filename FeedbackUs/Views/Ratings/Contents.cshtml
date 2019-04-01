@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Nội dung";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Tạo nội dung</h1>
+<select id="rate" class="custom-select" asp-items="@ViewBag.ratings">
+    <option value="">Chọn</option>
+</select>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="contents-page">
+            <div class="form-group">
+                <label id="l1" class="control-label">Nội dung</label>
+                <input id="n1" class="form-control" />
+            </div>
+            <div class="form-group form-check">
+                <select id="t1" class="custom-control">
+                    <option value="positive">Tích cực</option>
+                    <option value="negative">Tiêu cực</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <input type="submit" id="submit" value="Tạo" class="btn btn-primary" />
+        </div>
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Create">Tạo đánh giá</a>
+</div>
+
+<script>
+    $('#submit').on('click', function (e) {
+        var name = $('#n1').val();
+        var isnotpositive = $('#t1').val();
+        var id = $('#rate').val();
+        if (name != null && rate != '') {
+            var content = {};
+            if (isnotpositive != 'positive') {
+                content = { 'name': name, 'isnotnegative': false };
+            }
+            else {
+                content = { 'name': name, 'isnotnegative': true };
+            }
+            $.ajax({
+                type: 'post',
+                url: 'addcontent?id=' + id,
+                data: JSON.stringify(content),
+                datatype: 'json',
+                contentType: 'application/json',
+                success: function(data) {
+                    console.log('created');
+                    $('#n1').val('');
+                },
+                error: function() {
+                    console.log('failed');
+                }
+            });
+        }
+    });
+</script>

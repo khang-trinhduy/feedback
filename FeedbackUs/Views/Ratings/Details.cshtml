@@ -1,0 +1,21 @@
+﻿@model FeedbackUs.Models.Rating
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Rating</h4>
+    <hr />
+    @foreach (var item in Model.Contents)
+    {
+        <div class="form-control">
+            <input type="checkbox" class="custom-control-input" id="selected @item.Id" checked>
+            <label class="custom-control-label" for="help-check">@item.Name</label>
+        </div>
+    }
+    <button id="save" class="btn btn-primary">Lưu</button>
+</div>

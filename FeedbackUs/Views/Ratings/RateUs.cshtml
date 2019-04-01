@@ -1,0 +1,385 @@
+﻿@model FeedbackUs.Models.Rating
+@{
+    ViewData["Title"] = "RateUs";
+}
+<div class="rate-page">
+    <div class='rating-label'>
+        <h4>@Model.Name</h4>
+    </div>
+    <div class='rating-stars text-center'>
+        <ul id='stars'>
+            <li class='star' title='Poor' data-value='1'>
+                <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Fair' data-value='2'>
+                <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Good' data-value='3'>
+                <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Excellent' data-value='4'>
+                <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='WOW!!!' data-value='5'>
+                <i class='fa fa-star fa-fw'></i>
+            </li>
+        </ul>
+    </div>
+    <div class="feedback-page">
+        <label for="exampleFormControlTextarea1">Nội dung: </label>
+        <p id='required'>Bắt buộc</p>
+        <textarea class="form-control" id="feedback-area" rows="3" required></textarea>
+        
+    </div>
+    <div class="rate-contents" hidden>
+        <div class="contents-area">
+            @foreach (var content in Model.Contents.Where(c => c.IsNotNegative).ToList())
+            {
+                <div class="custom-control custom-checkbox mr-sm-2">
+                    <input name="content" type="checkbox" class="custom-control-input" id="check @content.Id" value="@content.Name">
+                    <label for="check @content.Id" class="custom-control-label" id="content @content.Id">@content.Name</label>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="reason-page" hidden>
+        <div class="contents">
+            @foreach (var content in Model.Contents.Where(c => !c.IsNotNegative).ToList())
+            {
+                <label id="check @content.Id" class="label-control">@content.Name</label>
+                <input type="text" class="form-control" id="content @content.Id" placeholder="Required">
+            }
+        </div>
+        <div class="info-page">
+            <div class="info-area">
+                <div class="form-group">
+                    <label for="email-info">Email</label>
+                    <p id='required1'>Bắt buộc</p>
+                    <input type="text" class="form-control" id="email-info" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="name-info">Họ & tên</label>
+                    <p id='required2'>Bắt buộc</p>
+                    <input type="text" class="form-control" id="name-info" placeholder="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ex1" class="modal">
+        <div class="img-container"><img src="https://media.giphy.com/media/51W5aNMgyeWytU9z24/giphy.gif" style="width: 100%" alt="Hướng dẫn" /></div>
+        <p id="modal-feedback"></p>
+        <button class="btn" data-clipboard-target="#modal-feedback">
+            Sao chép
+        </button>
+        <div class="next-page"><a id="next-page">Chuyển tiếp</a></div>
+        
+    </div>
+
+    <!-- Link to open the modal -->
+    <div class="btn-next"><a id="modal-a" href="#ex1" rel="modal:open">Xác nhận</a></div>
+</div>
+
+<style>
+    #required, #required1, #required2{
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: small;
+        font-family: -webkit-pictograph;
+        font-style: italic;
+        color: red;
+        padding-left: 10px;
+    }
+    .next-page{
+        text-align: right;
+    }
+    #next-page{
+        background: #84b1e2;
+        color: #fff;
+        border: none;
+        position: relative;
+        height: 60px;
+        font-size: 1.2em;
+        padding: 4px 8px 4px 8px;
+        cursor: pointer;
+        transition: 800ms ease all;
+        outline: none;
+    }
+    #next-page:hover{
+        background:#5e8fc5;
+        color:#fff;
+        text-decoration: none;
+        border: 50px;
+    }
+    .img-container{
+            margin-bottom: 10px;  
+    }
+    .btn-next{
+        display: block;
+        text-align: right;
+        padding: 0 0 3.5em;
+        margin: 40px 4px 0 0;
+    }
+    a.close-modal{
+        width: 0;
+        height: 0;
+    }
+    .modal a.close-modal {
+        background-image: none;
+    }
+    .modal{
+        background-image: none;
+        vertical-align: middle;
+        position: relative;
+        z-index: 2;
+        max-width: 650px;
+        box-sizing: border-box;
+        width: 90%;
+        background: #fff;
+        padding: 15px 30px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -o-border-radius: 8px;
+        -ms-border-radius: 8px;
+        border-radius: 8px;
+        -webkit-box-shadow: 0 0 10px #000;
+        -moz-box-shadow: 0 0 10px #000;
+        -o-box-shadow: 0 0 10px #000;
+        -ms-box-shadow: 0 0 10px #000;
+        box-shadow: 0 0 10px #000;
+        text-align: left;
+        background-image: none;
+    }
+    #modal-a{
+        background: #84b1e2;
+        color: #fff;
+        border: none;
+        position: relative;
+        height: 60px;
+        font-size: 1.2em;
+        padding: 4px 8px 4px 8px;
+        cursor: pointer;
+        transition: 800ms ease all;
+        outline: none;
+    }
+    #modal-a:hover{
+        background:#5e8fc5;
+        color:#fff;
+        text-decoration: none;
+        border: 50px;
+    }
+    .next{
+        background-color: #3498db;
+        padding: 8px 30px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 14px !important;
+        font-family: 'Open Sans', sans-serif !important;
+        position: absolute;
+    }
+    .rating-label>h4{
+        font-family: -webkit-body;
+    }
+    .navbar{
+        display: none;
+    }
+    .rating-label{
+        margin-top: 50px;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+    #modal-feedback{
+        display:inline-block;
+    }
+    .img-container{
+
+    }
+    #test-notworking {
+        font-style: italic;
+        color: coral;
+    }
+
+    .feedback-page {
+        border: none;
+        padding: 5px;
+    }
+
+    .info-page {
+        border: none;
+        padding: 5px;
+    }
+
+    .temporary {
+        border: 1px solid #808080;
+        padding: 5px;
+    }
+
+    .rate-contents {
+        border: none;
+    }
+
+    .reason-page {
+        border: none;
+    }
+    .rate-page{
+        background-color: white;
+        margin: 10px 0 0 0;
+        border-radius: 5px;
+        padding: 30px 20px 0 20px;
+        box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.25);
+        box-sizing: border-box;
+    }
+    #feedback-area{
+        display: block;
+        padding: 10px;
+        margin: 10px auto;
+        background-color: #f1f1f1;
+        border: none;
+        /* width: 50%; */
+        outline: none;
+        font-size: 14px !important;
+        font-family: 'Open Sans', sans-serif !important;
+    }
+    html, body{
+        background-color: #f1f1f1;
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+<script>
+    $('#required').hide();
+    $('#required1').hide();
+    $('#required2').hide();
+    var contents = JSON.parse('@Html.Raw(Json.Serialize(Model.Contents))');
+    var rate_name = JSON.parse('@Html.Raw(Json.Serialize(Model.Name))');
+    var ids = [];
+    var contentids = [];
+    var hints = [];
+    var star = 0;
+    for (var i = 0; i < contents.length; i++) {
+        ids.push(contents[i].id);
+        contentids.push('content ' + contents[i].id);
+    }
+
+    $('#modal-a').on('click', function () {
+        var fv = $('#feedback-area').val();
+        if(fv == '' || fv == '.')
+        {
+            $('#required').show();
+            return false;
+        }
+        var value = $('#feedback-area').val();
+        $('#modal-feedback').text(value);
+        var email = $('#email-info').val();
+        var name = $('#name-info').val();
+        if(email == '' && star < 3)
+        {
+            $('#required1').show();
+            return false;
+        }
+        if(name == '' && star < 3)
+        {
+            $('#required2').show();
+            return false;
+        }
+        var fb = $('#feedback-area').val();
+        var edit_fb = fb.charAt(0).toUpperCase() + fb.slice(1);
+        var feedback = { 'ratingname': rate_name, 'username': name, 'email': email, 'contents': fb, 'stars': star };
+        console.log(feedback);
+        $.ajax({
+            type: 'post',
+            datatype: 'json',
+            headers: {
+                'content-type': 'application/json'
+            },
+            data: JSON.stringify(feedback),
+            url: '@Url.Action("feedback", "ratings")',
+            success: function (data) {
+                console.log('created');
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    });
+    
+    $(document).ready(function () {
+        /* 1. Visualizing things on Hover - See next part for action on click */
+        $('#stars li').on('mouseover', function () {
+            var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
+
+            // Now highlight all the stars that's not after the current hovered star
+            $(this).parent().children('li.star').each(function (e) {
+                if (e < onStar) {
+                    $(this).addClass('hover');
+                }
+                else {
+                    $(this).removeClass('hover');
+                }
+            });
+
+        }).on('mouseout', function () {
+            $(this).parent().children('li.star').each(function (e) {
+                $(this).removeClass('hover');
+            });
+        });
+
+
+        /* 2. Action to perform on click */
+        $('#stars li').on('click', function () {
+            var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+            var stars = $(this).parent().children('li.star');
+
+            for (i = 0; i < stars.length; i++) {
+                $(stars[i]).removeClass('selected');
+            }
+
+            for (i = 0; i < onStar; i++) {
+                $(stars[i]).addClass('selected');
+            }
+
+            // JUST RESPONSE (Not needed)
+            var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+            star = ratingValue;
+            console.log(stars);
+            $('.reason-page').removeAttr('hidden');
+            $('.rate-contents').removeAttr('hidden');
+            if (ratingValue <= 2) {
+                $('.reason-page').show();
+                $('.rate-contents').hide();
+            }
+            else {
+                $('.reason-page').hide();
+                $('.rate-contents').show();
+            }
+        });
+    });
+
+    $('#next-page').on('click', function () {
+        window.open('@Html.Raw(Model.RDURL)');
+    });
+
+    var clipboard = new ClipboardJS('.btn');
+    clipboard.on('success', function (e) {
+        console.log(e);
+    });
+    clipboard.on('error', function (e) {
+        console.log(e);
+    });
+
+    $(':checkbox').on('change', function () {
+        $('#feedback-area').val('');
+        hints = [];
+        var str = '';
+        $('input:checkbox[name=content]:checked').each(function () {
+            hints.push($(this).val());
+        });
+        str = hints.join(', ');
+        str = str.toLowerCase();
+        var edit_fb = str.charAt(0).toUpperCase() + str.slice(1);
+        edit_fb += '.';
+        $('#feedback-area').val(edit_fb);
+    });
+
+
+</script>
