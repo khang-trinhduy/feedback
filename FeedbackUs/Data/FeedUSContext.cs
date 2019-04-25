@@ -18,7 +18,7 @@ namespace FeedbackUs.Models
 
         public DbSet<FeedbackUs.Models.Content> Content { get; set; }
 
-        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Feed> Feedbacks { get; set; }
 
     }
 }

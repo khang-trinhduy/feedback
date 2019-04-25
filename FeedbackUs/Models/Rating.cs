@@ -11,14 +11,14 @@ namespace FeedbackUs.Models
         public Rating(DateTime date, string name, string url)
         {
             Contents = new List<Content>();
-            Feedbacks = new List<Feedback>();
+            Feedbacks = new List<Feed>();
             Date = date;
             Name = name;
             RDURL = url;
         }
 
         public Rating() {
-            Feedbacks = new List<Feedback>();
+            Feedbacks = new List<Feed>();
             Contents = new List<Content>();
         }
 
@@ -29,7 +29,7 @@ namespace FeedbackUs.Models
         //[Required]
         //public string Feedback { get; set; }
         public List<Content> Contents { get; set; }
-        public List<Feedback> Feedbacks { get; set; }
+        public List<Feed> Feedbacks { get; set; }
         public DateTime Date { get; set; }
         public string Name { get; set; }
         public string RDURL { get; set; }

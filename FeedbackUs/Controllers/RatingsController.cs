@@ -68,7 +68,7 @@ namespace FeedbackUs.Controllers
             {
                 return View("error");
             }
-            var newfeedback = new Feedback { Contents = feedback.Contents, DateTime = DateTime.Now, Email = feedback.Email, RatingName = feedback.RatingName, Stars = feedback.Stars, UserName = feedback.UserName };
+            var newfeedback = new Feed { Contents = feedback.Contents, DateTime = DateTime.Now, Email = feedback.Email, RatingName = feedback.RatingName, Stars = feedback.Stars, UserName = feedback.UserName };
             var rating = await _context.Rating.FirstOrDefaultAsync(r => r.Name == feedback.RatingName);
             if (rating is null)
             {

@@ -8,6 +8,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190329113913_add some chages.cs" />
     <Compile Remove="Migrations\20190329113913_add some chages.Designer.cs" />
+    <Compile Remove="Migrations\20190425022131_new-init.cs" />
+    <Compile Remove="Migrations\20190425022131_new-init.Designer.cs" />
   </ItemGroup>
 
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FeedbackUs.Models
 {
-    public class Feedback
+    public class Feed
     {
         public int Id { get; set; }
         public string RatingName { get; set; }
